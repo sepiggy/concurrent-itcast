@@ -9,23 +9,27 @@ import java.sql.*;
 import java.util.*;
 
 public class GenericDao {
+
     static String URL = "jdbc:mysql://localhost:3306/test";
     static String USERNAME = "root";
     static String PASSWORD = "root";
 
     public <T> List<T> queryList(Class<T> beanClass, String sql, Object... args) {
+
         System.out.println("sql: [" + sql + "] params:" + Arrays.toString(args));
         BeanRowMapper<T> mapper = new BeanRowMapper<>(beanClass);
         return queryList(sql, mapper, args);
     }
 
     public <T> T queryOne(Class<T> beanClass, String sql, Object... args) {
+
         System.out.println("sql: [" + sql + "] params:" + Arrays.toString(args));
         BeanRowMapper<T> mapper = new BeanRowMapper<>(beanClass);
         return queryOne(sql, mapper, args);
     }
 
     private <T> List<T> queryList(String sql, RowMapper<T> mapper, Object... args) {
+
         try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             try (PreparedStatement psmt = conn.prepareStatement(sql)) {
                 if (args != null) {
@@ -48,11 +52,13 @@ public class GenericDao {
     }
 
     private <T> T queryOne(String sql, RowMapper<T> mapper, Object... args) {
+
         List<T> list = queryList(sql, mapper, args);
         return list.size() == 0 ? null : list.get(0);
     }
 
     public int update(String sql, Object... args) {
+
         System.out.println("sql: [" + sql + "] params:" + Arrays.toString(args));
         try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
             try (PreparedStatement psmt = conn.prepareStatement(sql)) {
@@ -69,15 +75,18 @@ public class GenericDao {
     }
 
     interface RowMapper<T> {
+
         T map(ResultSet rs);
+
     }
 
     static class BeanRowMapper<T> implements RowMapper<T> {
 
-        private Class<T> beanClass;
-        private Map<String, PropertyDescriptor> propertyMap = new HashMap<>();
+        private final Class<T> beanClass;
+        private final Map<String, PropertyDescriptor> propertyMap = new HashMap<>();
 
         public BeanRowMapper(Class<T> beanClass) {
+
             this.beanClass = beanClass;
             try {
                 BeanInfo beanInfo = Introspector.getBeanInfo(beanClass);
@@ -92,6 +101,7 @@ public class GenericDao {
 
         @Override
         public T map(ResultSet rs) {
+
             try {
                 ResultSetMetaData metaData = rs.getMetaData();
                 int columnCount = metaData.getColumnCount();
@@ -108,5 +118,7 @@ public class GenericDao {
                 throw new RuntimeException(e);
             }
         }
+
     }
+
 }

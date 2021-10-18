@@ -8,24 +8,13 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.Test42")
 public class LockCas {
+
     // 0 没加锁
     // 1 加锁
-    private AtomicInteger state = new AtomicInteger(0);
-
-    public void lock() {
-        while (true) {
-            if (state.compareAndSet(0, 1)) {
-                break;
-            }
-        }
-    }
-
-    public void unlock() {
-        log.debug("unlock...");
-        state.set(0);
-    }
+    private final AtomicInteger state = new AtomicInteger(0);
 
     public static void main(String[] args) {
+
         LockCas lock = new LockCas();
         new Thread(() -> {
             log.debug("begin...");
@@ -48,4 +37,20 @@ public class LockCas {
             }
         }).start();
     }
+
+    public void lock() {
+
+        while (true) {
+            if (state.compareAndSet(0, 1)) {
+                break;
+            }
+        }
+    }
+
+    public void unlock() {
+
+        log.debug("unlock...");
+        state.set(0);
+    }
+
 }

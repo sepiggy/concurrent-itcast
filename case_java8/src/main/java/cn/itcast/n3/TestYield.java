@@ -4,16 +4,18 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j(topic = "c.TestYield")
 public class TestYield {
+
     public static void main(String[] args) {
+
         Runnable task1 = () -> {
             int count = 0;
-            for (;;) {
+            for (; ; ) {
                 System.out.println("---->1 " + count++);
             }
         };
         Runnable task2 = () -> {
             int count = 0;
-            for (;;) {
+            for (; ; ) {
 //                Thread.yield();
                 System.out.println("              ---->2 " + count++);
             }

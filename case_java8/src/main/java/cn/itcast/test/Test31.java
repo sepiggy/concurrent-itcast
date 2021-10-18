@@ -10,7 +10,9 @@ public class Test31 {
     static Thread t1;
     static Thread t2;
     static Thread t3;
+
     public static void main(String[] args) {
+
         ParkUnpark pu = new ParkUnpark(5);
         t1 = new Thread(() -> {
             pu.print("a", t2);
@@ -27,10 +29,20 @@ public class Test31 {
 
         LockSupport.unpark(t1);
     }
+
 }
 
 class ParkUnpark {
+
+    private final int loopNumber;
+
+    public ParkUnpark(int loopNumber) {
+
+        this.loopNumber = loopNumber;
+    }
+
     public void print(String str, Thread next) {
+
         for (int i = 0; i < loopNumber; i++) {
             LockSupport.park();
             System.out.print(str);
@@ -38,9 +50,4 @@ class ParkUnpark {
         }
     }
 
-    private int loopNumber;
-
-    public ParkUnpark(int loopNumber) {
-        this.loopNumber = loopNumber;
-    }
 }

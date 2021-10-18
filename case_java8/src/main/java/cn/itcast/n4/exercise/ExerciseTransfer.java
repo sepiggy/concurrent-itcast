@@ -6,7 +6,12 @@ import java.util.Random;
 
 @Slf4j(topic = "c.ExerciseTransfer")
 public class ExerciseTransfer {
+
+    // Random 为线程安全
+    static Random random = new Random();
+
     public static void main(String[] args) throws InterruptedException {
+
         Account a = new Account(1000);
         Account b = new Account(1000);
         Thread t1 = new Thread(() -> {
@@ -27,38 +32,43 @@ public class ExerciseTransfer {
         log.debug("total:{}", (a.getMoney() + b.getMoney()));
     }
 
-    // Random 为线程安全
-    static Random random = new Random();
-
     // 随机 1~100
     public static int randomAmount() {
+
         return random.nextInt(100) + 1;
     }
+
 }
 
 // 账户
 class Account {
+
     private int money;
 
     public Account(int money) {
+
         this.money = money;
     }
 
     public int getMoney() {
+
         return money;
     }
 
     public void setMoney(int money) {
+
         this.money = money;
     }
 
     // 转账
     public void transfer(Account target, int amount) {
-        synchronized(Account.class) {
+
+        synchronized (Account.class) {
             if (this.money >= amount) {
                 this.setMoney(this.getMoney() - amount);
                 target.setMoney(target.getMoney() + amount);
             }
         }
     }
+
 }

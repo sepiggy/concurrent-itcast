@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 public class TestUnsafe {
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+
         Field theUnsafe = Unsafe.class.getDeclaredField("theUnsafe");
         theUnsafe.setAccessible(true);
         Unsafe unsafe = (Unsafe) theUnsafe.get(null);
@@ -26,11 +27,15 @@ public class TestUnsafe {
         // 3. 验证
         System.out.println(t);
     }
+
 }
+
 @Data
 class Teacher {
+
     volatile int id;
     volatile String name;
+
 }
 
 

@@ -9,11 +9,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j(topic = "c.TestExecutors")
 public class TestExecutors {
+
     public static void main(String[] args) throws InterruptedException {
+
         test2();
     }
 
     public static void test2() {
+
         ExecutorService pool = Executors.newSingleThreadExecutor();
         pool.execute(() -> {
             log.debug("1");
@@ -30,11 +33,13 @@ public class TestExecutors {
     }
 
     private static void test1() {
+
         ExecutorService pool = Executors.newFixedThreadPool(2, new ThreadFactory() {
-            private AtomicInteger t = new AtomicInteger(1);
+            private final AtomicInteger t = new AtomicInteger(1);
 
             @Override
             public Thread newThread(Runnable r) {
+
                 return new Thread(r, "mypool_t" + t.getAndIncrement());
             }
         });
@@ -51,4 +56,5 @@ public class TestExecutors {
             log.debug("3");
         });
     }
+
 }

@@ -4,7 +4,9 @@ import java.util.*;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class TestGenericDao {
+
     public static void main(String[] args) {
+
         GenericDao dao = new GenericDaoCached();
         System.out.println("============> 查询");
         String sql = "select * from emp where empno = ?";
@@ -21,26 +23,29 @@ public class TestGenericDao {
         emp = dao.queryOne(Emp.class, sql, empno);
         System.out.println(emp);
     }
+
 }
 
 class GenericDaoCached extends GenericDao {
-    private GenericDao dao = new GenericDao();
-    private Map<SqlPair, Object> map = new HashMap<>();
-    private ReentrantReadWriteLock rw = new ReentrantReadWriteLock();
+
+    private final GenericDao dao = new GenericDao();
+    private final Map<SqlPair, Object> map = new HashMap<>();
+    private final ReentrantReadWriteLock rw = new ReentrantReadWriteLock();
 
     @Override
     public <T> List<T> queryList(Class<T> beanClass, String sql, Object... args) {
+
         return dao.queryList(beanClass, sql, args);
     }
 
     @Override
     public <T> T queryOne(Class<T> beanClass, String sql, Object... args) {
         // 先从缓存中找，找到直接返回
-        SqlPair key = new SqlPair(sql, args);;
+        SqlPair key = new SqlPair(sql, args);
         rw.readLock().lock();
         try {
             T value = (T) map.get(key);
-            if(value != null) {
+            if (value != null) {
                 return value;
             }
         } finally {
@@ -50,7 +55,7 @@ class GenericDaoCached extends GenericDao {
         try {
             // 多个线程
             T value = (T) map.get(key);
-            if(value == null) {
+            if (value == null) {
                 // 缓存中没有，查询数据库
                 value = dao.queryOne(beanClass, sql, args);
                 map.put(key, value);
@@ -63,6 +68,7 @@ class GenericDaoCached extends GenericDao {
 
     @Override
     public int update(String sql, Object... args) {
+
         rw.writeLock().lock();
         try {
             // 先更新库
@@ -76,16 +82,19 @@ class GenericDaoCached extends GenericDao {
     }
 
     class SqlPair {
-        private String sql;
-        private Object[] args;
+
+        private final String sql;
+        private final Object[] args;
 
         public SqlPair(String sql, Object[] args) {
+
             this.sql = sql;
             this.args = args;
         }
 
         @Override
         public boolean equals(Object o) {
+
             if (this == o) {
                 return true;
             }
@@ -99,10 +108,12 @@ class GenericDaoCached extends GenericDao {
 
         @Override
         public int hashCode() {
+
             int result = Objects.hash(sql);
             result = 31 * result + Arrays.hashCode(args);
             return result;
         }
+
     }
 
 }

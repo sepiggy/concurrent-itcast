@@ -5,6 +5,7 @@ import sun.misc.Unsafe;
 import java.lang.reflect.Field;
 
 public class UnsafeAccessor {
+
     private static final Unsafe unsafe;
 
     static {
@@ -18,6 +19,8 @@ public class UnsafeAccessor {
     }
 
     public static Unsafe getUnsafe() {
+
         return unsafe;
     }
+
 }

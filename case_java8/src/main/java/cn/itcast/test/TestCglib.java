@@ -9,7 +9,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class TestCglib {
+
     public static void main(String[] args) throws IOException {
+
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(MyService.class);
         enhancer.setCallback(new MethodInterceptor() {
@@ -17,7 +19,6 @@ public class TestCglib {
             public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
 
                 Object result = methodProxy.invokeSuper(o, objects);
-
 
                 Field fastClassInfo = methodProxy.getClass().getDeclaredField("fastClassInfo");
                 fastClassInfo.setAccessible(true);
@@ -39,9 +40,14 @@ public class TestCglib {
         myService.save();
         System.in.read();
     }
+
 }
+
 class MyService {
+
     public void save() {
+
         System.out.println("save...");
     }
+
 }

@@ -7,12 +7,13 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 @Slf4j(topic = "c.TestMakeTea")
 public class TestMakeTea {
 
-
     public static void main(String[] args) {
+
         S3.makeTea();
     }
 
     private static void s1() {
+
         Thread t1 = new Thread(() -> {
             log.debug("洗水壶");
             sleep(1);
@@ -38,16 +39,19 @@ public class TestMakeTea {
         t1.start();
         t2.start();
     }
+
 }
 
 @Slf4j(topic = "c.S2")
 class S2 {
+
+    static final Object lock = new Object();
     static String kettle = "冷水";
     static String tea = null;
-    static final Object lock = new Object();
     static boolean maked = false;
 
     public static void makeTea() {
+
         new Thread(() -> {
             log.debug("洗水壶");
             sleep(1);
@@ -94,15 +98,18 @@ class S2 {
             }
         }, "小王").start();
     }
+
 }
 
 @Slf4j(topic = "c.S3")
 class S3 {
+
+    static final Object lock = new Object();
     static String kettle = "冷水";
     static String tea = null;
-    static final Object lock = new Object();
 
     public static void makeTea() {
+
         new Thread(() -> {
             log.debug("洗水壶");
             sleep(1);
@@ -141,4 +148,5 @@ class S3 {
         }, "王夫人").start();
 
     }
+
 }

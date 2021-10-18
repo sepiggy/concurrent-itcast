@@ -6,10 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 public class Test12 {
 
     public static void main(String[] args) throws InterruptedException {
+
         Thread t1 = new Thread(() -> {
-            while(true) {
+            while (true) {
                 boolean interrupted = Thread.currentThread().isInterrupted();
-                if(interrupted) {
+                if (interrupted) {
                     log.debug("被打断了, 退出循环");
                     break;
                 }
@@ -21,4 +22,5 @@ public class Test12 {
         log.debug("interrupt");
         t1.interrupt();
     }
+
 }

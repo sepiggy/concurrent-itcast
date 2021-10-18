@@ -1,11 +1,11 @@
 package cn.itcast.n4;
 
-import java.io.IOException;
 // PrintConcurrentLocks
 public class Test {
 
     public static void main(String[] args) throws InterruptedException {
-        new Thread(()->{
+
+        new Thread(() -> {
             synchronized (Test.class) {
                 try {
                     Thread.sleep(10000);
@@ -13,19 +13,20 @@ public class Test {
                     e.printStackTrace();
                 }
             }
-        },"t1").start();
+        }, "t1").start();
 
         Thread.sleep(100);
-        new Thread(()->{
+        new Thread(() -> {
             synchronized (Test.class) {
 
             }
-        },"t2").start();
+        }, "t2").start();
 
-        new Thread(()->{
+        new Thread(() -> {
             synchronized (Test.class) {
 
             }
-        },"t3").start();
+        }, "t3").start();
     }
+
 }

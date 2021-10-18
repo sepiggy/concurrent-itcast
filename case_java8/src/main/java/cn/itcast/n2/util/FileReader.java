@@ -8,7 +8,9 @@ import java.io.IOException;
 
 @Slf4j(topic = "c.FileReader")
 public class FileReader {
+
     public static void read(String filename) {
+
         int idx = filename.lastIndexOf(File.separator);
         String shortName = filename.substring(idx + 1);
         try (FileInputStream in = new FileInputStream(filename)) {
@@ -25,4 +27,5 @@ public class FileReader {
             e.printStackTrace();
         }
     }
+
 }

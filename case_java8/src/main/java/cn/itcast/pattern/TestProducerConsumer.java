@@ -1,6 +1,5 @@
 package cn.itcast.pattern;
 
-
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -9,7 +8,9 @@ import java.util.List;
 
 @Slf4j(topic = "c.TestProducerConsumer")
 public class TestProducerConsumer {
+
     public static void main(String[] args) {
+
         MessageQueue messageQueue = new MessageQueue(2);
         for (int i = 0; i < 4; i++) {
             int id = i;
@@ -34,37 +35,46 @@ public class TestProducerConsumer {
 
         }, "消费者").start();
     }
+
 }
 
 class Message {
-    private int id;
-    private Object message;
+
+    private final int id;
+    private final Object message;
 
     public Message(int id, Object message) {
+
         this.id = id;
         this.message = message;
     }
 
     public int getId() {
+
         return id;
     }
 
     public Object getMessage() {
+
         return message;
     }
+
 }
 
 @Slf4j(topic = "c.MessageQueue")
 class MessageQueue {
-    private LinkedList<Message> queue;
-    private int capacity;
+
+    private final LinkedList<Message> queue;
+    private final int capacity;
 
     public MessageQueue(int capacity) {
+
         this.capacity = capacity;
         queue = new LinkedList<>();
     }
 
     public Message take() {
+
         synchronized (queue) {
             while (queue.isEmpty()) {
                 log.debug("没货了, wait");
@@ -81,6 +91,7 @@ class MessageQueue {
     }
 
     public void put(Message message) {
+
         synchronized (queue) {
             while (queue.size() == capacity) {
                 log.debug("库存已达上限, wait");
@@ -94,4 +105,5 @@ class MessageQueue {
             queue.notifyAll();
         }
     }
+
 }

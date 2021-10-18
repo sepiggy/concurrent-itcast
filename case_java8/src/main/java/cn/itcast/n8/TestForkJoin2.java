@@ -9,25 +9,29 @@ import java.util.concurrent.RecursiveTask;
 public class TestForkJoin2 {
 
     public static void main(String[] args) {
+
         ForkJoinPool pool = new ForkJoinPool(4);
         System.out.println(pool.invoke(new MyTask(5)));
 
         // new MyTask(5)  5+ new MyTask(4)  4 + new MyTask(3)  3 + new MyTask(2)  2 + new MyTask(1)
     }
+
 }
 
 // 1~n 之间整数的和
 @Slf4j(topic = "c.MyTask")
 class MyTask extends RecursiveTask<Integer> {
 
-    private int n;
+    private final int n;
 
     public MyTask(int n) {
+
         this.n = n;
     }
 
     @Override
     public String toString() {
+
         return "{" + n + '}';
     }
 
@@ -49,6 +53,7 @@ class MyTask extends RecursiveTask<Integer> {
         log.debug("join() {} + {} = {}", n, t1, result);
         return result;
     }
+
 }
 
 

@@ -7,9 +7,12 @@ import java.util.List;
 
 @Slf4j(topic = "c.Test29")
 public class Test29 {
-    private static Integer i = 0;
+
     private static final Object obj = new Object();
+    private static Integer i = 0;
+
     public static void main(String[] args) throws InterruptedException {
+
         List<Thread> list = new ArrayList<>();
         for (int j = 0; j < 2; j++) {
             Thread thread = new Thread(() -> {
@@ -31,4 +34,5 @@ public class Test29 {
         });
         log.debug("{}", i);
     }
+
 }

@@ -6,11 +6,14 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestDeadLock")
 public class TestDeadLock {
+
     public static void main(String[] args) {
+
         test1();
     }
 
     private static void test1() {
+
         Object A = new Object();
         Object B = new Object();
         Thread t1 = new Thread(() -> {
@@ -37,5 +40,6 @@ public class TestDeadLock {
         t1.start();
         t2.start();
     }
+
 }
 

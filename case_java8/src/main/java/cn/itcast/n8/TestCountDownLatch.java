@@ -13,11 +13,14 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestCountDownLatch")
 public class TestCountDownLatch {
+
     public static void main(String[] args) throws InterruptedException, ExecutionException {
+
         test3();
     }
 
     private static void test5() {
+
         CountDownLatch latch = new CountDownLatch(3);
         ExecutorService service = Executors.newFixedThreadPool(4);
         service.submit(() -> {
@@ -38,7 +41,7 @@ public class TestCountDownLatch {
             latch.countDown();
             log.debug("end...{}", latch.getCount());
         });
-        service.submit(()->{
+        service.submit(() -> {
             try {
                 log.debug("waiting...");
                 latch.await();
@@ -50,6 +53,7 @@ public class TestCountDownLatch {
     }
 
     private static void test4() throws InterruptedException {
+
         CountDownLatch latch = new CountDownLatch(3);
 
         new Thread(() -> {
@@ -79,11 +83,12 @@ public class TestCountDownLatch {
     }
 
     private static void test3() throws InterruptedException, ExecutionException {
+
         RestTemplate restTemplate = new RestTemplate();
         log.debug("begin");
         ExecutorService service = Executors.newCachedThreadPool();
         CountDownLatch latch = new CountDownLatch(4);
-        Future<Map<String,Object>> f1 = service.submit(() -> {
+        Future<Map<String, Object>> f1 = service.submit(() -> {
             Map<String, Object> response = restTemplate.getForObject("http://localhost:8080/order/{1}", Map.class, 1);
             return response;
         });
@@ -109,6 +114,7 @@ public class TestCountDownLatch {
     }
 
     private static void test2() throws InterruptedException {
+
         AtomicInteger num = new AtomicInteger(0);
         ExecutorService service = Executors.newFixedThreadPool(10, (r) -> {
             return new Thread(r, "t" + num.getAndIncrement());
@@ -134,4 +140,5 @@ public class TestCountDownLatch {
         System.out.println("\n游戏开始...");
         service.shutdown();
     }
+
 }

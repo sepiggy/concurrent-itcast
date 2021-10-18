@@ -4,12 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 
 import static cn.itcast.n2.util.Sleeper.sleep;
 
+/**
+ * 活锁
+ */
 @Slf4j(topic = "c.TestLiveLock")
 public class TestLiveLock {
-    static volatile int count = 10;
+
     static final Object lock = new Object();
+    static volatile int count = 10;
 
     public static void main(String[] args) {
+
         new Thread(() -> {
             // 期望减到 0 退出循环
             while (count > 0) {
@@ -27,4 +32,5 @@ public class TestLiveLock {
             }
         }, "t2").start();
     }
+
 }

@@ -6,10 +6,13 @@ import java.io.IOException;
 
 @Slf4j(topic = "c.TestState")
 public class TestState {
+
     public static void main(String[] args) throws IOException {
+
         Thread t1 = new Thread("t1") {
             @Override
             public void run() {
+
                 log.debug("running...");
             }
         };
@@ -17,7 +20,8 @@ public class TestState {
         Thread t2 = new Thread("t2") {
             @Override
             public void run() {
-                while(true) { // runnable
+
+                while (true) { // runnable
 
                 }
             }
@@ -27,6 +31,7 @@ public class TestState {
         Thread t3 = new Thread("t3") {
             @Override
             public void run() {
+
                 log.debug("running...");
             }
         };
@@ -35,6 +40,7 @@ public class TestState {
         Thread t4 = new Thread("t4") {
             @Override
             public void run() {
+
                 synchronized (TestState.class) {
                     try {
                         Thread.sleep(1000000); // timed_waiting
@@ -49,6 +55,7 @@ public class TestState {
         Thread t5 = new Thread("t5") {
             @Override
             public void run() {
+
                 try {
                     t2.join(); // waiting
                 } catch (InterruptedException e) {
@@ -61,6 +68,7 @@ public class TestState {
         Thread t6 = new Thread("t6") {
             @Override
             public void run() {
+
                 synchronized (TestState.class) { // blocked
                     try {
                         Thread.sleep(1000000);
@@ -85,4 +93,5 @@ public class TestState {
         log.debug("t6 state {}", t6.getState());
         System.in.read();
     }
+
 }

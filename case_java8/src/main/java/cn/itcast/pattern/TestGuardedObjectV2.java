@@ -9,7 +9,9 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestGuardedObjectV2")
 public class TestGuardedObjectV2 {
+
     public static void main(String[] args) {
+
         GuardedObjectV2 v2 = new GuardedObjectV2();
         new Thread(() -> {
             sleep(1);
@@ -25,8 +27,8 @@ public class TestGuardedObjectV2 {
             log.debug("can't get response");
         }
     }
-}
 
+}
 
 /**
  * 添加超时处理
@@ -34,10 +36,11 @@ public class TestGuardedObjectV2 {
 @Slf4j(topic = "c.GuardedObjectV2")
 class GuardedObjectV2 {
 
-    private Object response;
     private final Object lock = new Object();
+    private Object response;
 
     public Object get(long millis) {
+
         synchronized (lock) {
             // 1) 记录最初时间
             long last = System.currentTimeMillis();
@@ -65,6 +68,7 @@ class GuardedObjectV2 {
     }
 
     public void complete(Object response) {
+
         synchronized (lock) {
             // 条件满足，通知等待线程
             this.response = response;
@@ -72,4 +76,5 @@ class GuardedObjectV2 {
             lock.notifyAll();
         }
     }
+
 }

@@ -5,6 +5,7 @@ public class TestVolatile {
     volatile boolean initialized = false;
 
     void init() {
+
         if (initialized) {
             return;
         }
@@ -15,4 +16,5 @@ public class TestVolatile {
     private void doInit() {
 
     }
+
 }

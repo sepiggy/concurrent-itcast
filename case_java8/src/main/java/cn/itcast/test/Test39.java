@@ -12,15 +12,16 @@ import java.util.function.Supplier;
 public class Test39 {
 
     public static void main(String[] args) {
+
         demo(
-                ()->new int[10],
-                (array)->array.length,
+                () -> new int[10],
+                (array) -> array.length,
                 (array, index) -> array[index]++,
-                array-> System.out.println(Arrays.toString(array))
+                array -> System.out.println(Arrays.toString(array))
         );
 
         demo(
-                ()-> new AtomicIntegerArray(10),
+                () -> new AtomicIntegerArray(10),
                 (array) -> array.length(),
                 (array, index) -> array.getAndIncrement(index),
                 array -> System.out.println(array)
@@ -28,10 +29,11 @@ public class Test39 {
     }
 
     /**
-     参数1，提供数组、可以是线程不安全数组或线程安全数组
-     参数2，获取数组长度的方法
-     参数3，自增方法，回传 array, index
-     参数4，打印数组的方法
+     * 验证方法
+     * 参数1，提供数组、可以是线程不安全数组或线程安全数组
+     * 参数2，获取数组长度的方法
+     * 参数3，自增方法，回传 array, index
+     * 参数4，打印数组的方法
      */
     // supplier 提供者 无中生有  ()->结果
     // function 函数   一个参数一个结果   (参数)->结果  ,  BiFunction (参数1,参数2)->结果
@@ -40,7 +42,8 @@ public class Test39 {
             Supplier<T> arraySupplier,
             Function<T, Integer> lengthFun,
             BiConsumer<T, Integer> putConsumer,
-            Consumer<T> printConsumer ) {
+            Consumer<T> printConsumer) {
+
         List<Thread> ts = new ArrayList<>();
         T array = arraySupplier.get();
         int length = lengthFun.apply(array);
@@ -48,7 +51,7 @@ public class Test39 {
             // 每个线程对数组作 10000 次操作
             ts.add(new Thread(() -> {
                 for (int j = 0; j < 10000; j++) {
-                    putConsumer.accept(array, j%length);
+                    putConsumer.accept(array, j % length);
                 }
             }));
         }
@@ -63,4 +66,5 @@ public class Test39 {
         });     // 等所有线程结束
         printConsumer.accept(array);
     }
+
 }

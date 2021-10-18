@@ -1,17 +1,23 @@
 package cn.itcast.test;
 
-public class TestEnum {
-    public static void main(String[] args) {
-        System.out.println(Color.ONE);
-    }
-}
-
-enum Color{
+enum Color {
     ONE;
-    Color() {
-        System.out.println("init");
-    }
+
     static {
         System.out.println("static");
     }
+
+    Color() {
+
+        System.out.println("init");
+    }
+}
+
+public class TestEnum {
+
+    public static void main(String[] args) {
+
+        System.out.println(Color.ONE);
+    }
+
 }

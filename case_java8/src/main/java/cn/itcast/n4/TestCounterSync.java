@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j(topic = "c.TestCounterSync")
 public class TestCounterSync {
-    static int counter = 0;
+
     static final Object room = new Object();
+    static int counter = 0;
 
     public static void main(String[] args) throws InterruptedException {
+
         Thread t1 = new Thread(() -> {
             for (int i = 0; i < 5000; i++) {
                 synchronized (room) {
@@ -28,6 +30,7 @@ public class TestCounterSync {
         t2.start();
         t1.join();
         t2.join();
-        log.debug("{}",counter);
+        log.debug("{}", counter);
     }
+
 }

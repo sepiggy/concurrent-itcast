@@ -9,7 +9,9 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j(topic = "c.Test28")
 public class Test28 {
+
     public static void main(String[] args) {
+
         AwaitSignal2 as = new AwaitSignal2(3);
         as.start(new Thread(() -> {
             as.print("a");
@@ -21,15 +23,24 @@ public class Test28 {
             as.print("d");
         }));
 
-
     }
+
 }
 
 @Slf4j(topic = "c.AwaitSignal")
 class AwaitSignal2 extends ReentrantLock {
-    private Map<Thread, Condition[]> map = new HashMap<>();
+
+    private final Map<Thread, Condition[]> map = new HashMap<>();
+    // 循环次数
+    private final int loopNumber;
+
+    public AwaitSignal2(int loopNumber) {
+
+        this.loopNumber = loopNumber;
+    }
 
     public void start(Thread... threads) {
+
         Condition[] temp = new Condition[threads.length];
         for (int i = 0; i < threads.length; i++) {
             temp[i] = this.newCondition();
@@ -61,6 +72,7 @@ class AwaitSignal2 extends ReentrantLock {
     }
 
     public void print(String str) {
+
         for (int i = 0; i < loopNumber; i++) {
             this.lock();
             try {
@@ -76,10 +88,4 @@ class AwaitSignal2 extends ReentrantLock {
         }
     }
 
-    // 循环次数
-    private int loopNumber;
-
-    public AwaitSignal2(int loopNumber) {
-        this.loopNumber = loopNumber;
-    }
 }

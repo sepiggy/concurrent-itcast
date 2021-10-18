@@ -8,7 +8,9 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestParkUnpark")
 public class TestParkUnpark {
+
     public static void main(String[] args) {
+
         Thread t1 = new Thread(() -> {
             log.debug("start...");
             sleep(2);
@@ -22,4 +24,5 @@ public class TestParkUnpark {
         log.debug("unpark...");
         LockSupport.unpark(t1);
     }
+
 }

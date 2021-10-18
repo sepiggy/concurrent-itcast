@@ -1,20 +1,22 @@
 package cn.itcast.pattern;
 
-import java.util.Arrays;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
 class SyncWaitNotify {
+
+    private final int loopNumber;
     private int flag;
-    private int loopNumber;
 
     public SyncWaitNotify(int flag, int loopNumber) {
+
         this.flag = flag;
         this.loopNumber = loopNumber;
     }
 
     public void print(int waitFlag, int nextFlag, String str) {
+
         for (int i = 0; i < loopNumber; i++) {
             synchronized (this) {
                 while (this.flag != waitFlag) {
@@ -30,19 +32,23 @@ class SyncWaitNotify {
             }
         }
     }
+
 }
 
 class SyncLock extends ReentrantLock {
+
+    private final int loopNumber;
     Condition waitSet = this.newCondition();
     private int flag;
-    private int loopNumber;
 
     public SyncLock(int flag, int loopNumber) {
+
         this.flag = flag;
         this.loopNumber = loopNumber;
     }
 
     public void print(int waitFlag, int nextFlag, String str) {
+
         for (int i = 0; i < loopNumber; i++) {
             this.lock();
             try {
@@ -61,21 +67,26 @@ class SyncLock extends ReentrantLock {
             }
         }
     }
+
 }
 
 class SyncPark {
-    private int loopNumber;
+
+    private final int loopNumber;
     private Thread[] threads;
 
     public SyncPark(int loopNumber) {
+
         this.loopNumber = loopNumber;
     }
 
     public void setThreads(Thread... threads) {
+
         this.threads = threads;
     }
 
     public void print(String str) {
+
         for (int i = 0; i < loopNumber; i++) {
             LockSupport.park();
             System.out.print(str);
@@ -84,38 +95,41 @@ class SyncPark {
     }
 
     private Thread nextThread() {
+
         Thread current = Thread.currentThread();
         int index = 0;
         for (int i = 0; i < threads.length; i++) {
-            if(threads[i] == current) {
+            if (threads[i] == current) {
                 index = i;
                 break;
             }
         }
-        if(index < threads.length - 1) {
-            return threads[index+1];
+        if (index < threads.length - 1) {
+            return threads[index + 1];
         } else {
             return threads[0];
         }
     }
 
     public void start() {
+
         for (Thread thread : threads) {
             thread.start();
         }
         LockSupport.unpark(threads[0]);
     }
+
 }
-
-
 
 public class TestOrder {
 
     public static void main(String[] args) {
+
         test3();
     }
 
     private static void test3() {
+
         SyncPark syncPark = new SyncPark(3);
         Thread t1 = new Thread(() -> {
             syncPark.print("a");
@@ -131,6 +145,7 @@ public class TestOrder {
     }
 
     private static void test2() {
+
         SyncLock syncLock = new SyncLock(1, 5);
         new Thread(() -> {
             syncLock.print(1, 2, "a");
@@ -144,6 +159,7 @@ public class TestOrder {
     }
 
     private static void test1() {
+
         SyncWaitNotify syncWaitNotify = new SyncWaitNotify(1, 5);
         new Thread(() -> {
             syncWaitNotify.print(1, 2, "a");

@@ -16,11 +16,13 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TestWordCount {
+
     public static void main(String[] args) {
+
         demo(
                 // 创建 map 集合
                 // 创建 ConcurrentHashMap 对不对？
-                () -> new ConcurrentHashMap<String, LongAdder>(8,0.75f,8),
+                () -> new ConcurrentHashMap<String, LongAdder>(8, 0.75f, 8),
 
                 (map, words) -> {
                     for (String word : words) {
@@ -41,7 +43,6 @@ public class TestWordCount {
         );
     }
 
-
     private static void demo2() {
 
         Map<String, Integer> collect = IntStream.range(1, 27).parallel()
@@ -52,6 +53,7 @@ public class TestWordCount {
     }
 
     private static <V> void demo(Supplier<Map<String, V>> supplier, BiConsumer<Map<String, V>, List<String>> consumer) {
+
         Map<String, V> counterMap = supplier.get();
         // key value
         // a   200
@@ -79,6 +81,7 @@ public class TestWordCount {
     }
 
     public static List<String> readFromFile(int i) {
+
         ArrayList<String> words = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream("tmp/" + i + ".txt")))) {
             while (true) {
@@ -93,4 +96,5 @@ public class TestWordCount {
             throw new RuntimeException(e);
         }
     }
+
 }

@@ -17,7 +17,7 @@ public class TestSchedule {
         // 获取周四时间
         LocalDateTime time = now.withHour(18).withMinute(0).withSecond(0).withNano(0).with(DayOfWeek.THURSDAY);
         // 如果 当前时间 > 本周周四，必须找到下周周四
-        if(now.compareTo(time) > 0) {
+        if (now.compareTo(time) > 0) {
             time = time.plusWeeks(1);
         }
         System.out.println(time);
@@ -30,4 +30,5 @@ public class TestSchedule {
             System.out.println("running...");
         }, initailDelay, period, TimeUnit.MILLISECONDS);
     }
+
 }

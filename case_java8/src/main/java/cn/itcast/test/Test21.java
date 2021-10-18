@@ -10,17 +10,18 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 public class Test21 {
 
     public static void main(String[] args) {
+
         MessageQueue queue = new MessageQueue(2);
 
         for (int i = 0; i < 3; i++) {
             int id = i;
             new Thread(() -> {
-                queue.put(new Message(id , "值"+id));
+                queue.put(new Message(id, "值" + id));
             }, "生产者" + i).start();
         }
 
         new Thread(() -> {
-            while(true) {
+            while (true) {
                 sleep(1);
                 Message message = queue.take();
             }
@@ -32,12 +33,14 @@ public class Test21 {
 // 消息队列类 ， java 线程之间通信
 @Slf4j(topic = "c.MessageQueue")
 class MessageQueue {
+
     // 消息的队列集合
-    private LinkedList<Message> list = new LinkedList<>();
+    private final LinkedList<Message> list = new LinkedList<>();
     // 队列容量
-    private int capcity;
+    private final int capcity;
 
     public MessageQueue(int capcity) {
+
         this.capcity = capcity;
     }
 
@@ -45,7 +48,7 @@ class MessageQueue {
     public Message take() {
         // 检查队列是否为空
         synchronized (list) {
-            while(list.isEmpty()) {
+            while (list.isEmpty()) {
                 try {
                     log.debug("队列为空, 消费者线程等待");
                     list.wait();
@@ -63,9 +66,10 @@ class MessageQueue {
 
     // 存入消息
     public void put(Message message) {
+
         synchronized (list) {
             // 检查对象是否已满
-            while(list.size() == capcity) {
+            while (list.size() == capcity) {
                 try {
                     log.debug("队列已满, 生产者线程等待");
                     list.wait();
@@ -79,30 +83,37 @@ class MessageQueue {
             list.notifyAll();
         }
     }
+
 }
 
 final class Message {
-    private int id;
-    private Object value;
+
+    private final int id;
+    private final Object value;
 
     public Message(int id, Object value) {
+
         this.id = id;
         this.value = value;
     }
 
     public int getId() {
+
         return id;
     }
 
     public Object getValue() {
+
         return value;
     }
 
     @Override
     public String toString() {
+
         return "Message{" +
                 "id=" + id +
                 ", value=" + value +
                 '}';
     }
+
 }

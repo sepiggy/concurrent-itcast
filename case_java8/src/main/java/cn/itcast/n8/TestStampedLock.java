@@ -8,7 +8,9 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestStampedLock")
 public class TestStampedLock {
+
     public static void main(String[] args) {
+
         DataContainerStamped dataContainer = new DataContainerStamped(1);
         new Thread(() -> {
             dataContainer.read(1);
@@ -18,18 +20,22 @@ public class TestStampedLock {
             dataContainer.read(0);
         }, "t2").start();
     }
+
 }
 
 @Slf4j(topic = "c.DataContainerStamped")
 class DataContainerStamped {
-    private int data;
+
     private final StampedLock lock = new StampedLock();
+    private int data;
 
     public DataContainerStamped(int data) {
+
         this.data = data;
     }
 
     public int read(int readTime) {
+
         long stamp = lock.tryOptimisticRead();
         log.debug("optimistic read locking...{}", stamp);
         sleep(readTime);
@@ -52,6 +58,7 @@ class DataContainerStamped {
     }
 
     public void write(int newData) {
+
         long stamp = lock.writeLock();
         log.debug("write lock {}", stamp);
         try {
@@ -62,4 +69,5 @@ class DataContainerStamped {
             lock.unlockWrite(stamp);
         }
     }
+
 }

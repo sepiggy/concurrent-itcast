@@ -10,6 +10,7 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestTimer")
 public class TestTimer {
+
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         /*ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
         pool.schedule(() -> {
@@ -33,6 +34,7 @@ public class TestTimer {
     }
 
     private static void method3() {
+
         ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
         log.debug("start...");
         pool.scheduleAtFixedRate(() -> {
@@ -41,6 +43,7 @@ public class TestTimer {
     }
 
     private static void method2(ScheduledExecutorService pool) {
+
         pool.schedule(() -> {
             log.debug("task1");
             int i = 1 / 0;
@@ -52,10 +55,12 @@ public class TestTimer {
     }
 
     private static void method1() {
+
         Timer timer = new Timer();
         TimerTask task1 = new TimerTask() {
             @Override
             public void run() {
+
                 log.debug("task 1");
                 sleep(2);
             }
@@ -63,6 +68,7 @@ public class TestTimer {
         TimerTask task2 = new TimerTask() {
             @Override
             public void run() {
+
                 log.debug("task 2");
             }
         };
@@ -71,4 +77,5 @@ public class TestTimer {
         timer.schedule(task1, 1000);
         timer.schedule(task2, 1000);
     }
+
 }

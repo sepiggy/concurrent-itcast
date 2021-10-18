@@ -8,7 +8,9 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestReadWriteLock")
 public class TestReadWriteLock {
+
     public static void main(String[] args) throws InterruptedException {
+
         DataContainer dataContainer = new DataContainer();
         new Thread(() -> {
             dataContainer.read();
@@ -18,16 +20,19 @@ public class TestReadWriteLock {
             dataContainer.read();
         }, "t2").start();
     }
+
 }
 
 @Slf4j(topic = "c.DataContainer")
 class DataContainer {
+
+    private final ReentrantReadWriteLock rw = new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock.ReadLock r = rw.readLock();
+    private final ReentrantReadWriteLock.WriteLock w = rw.writeLock();
     private Object data;
-    private ReentrantReadWriteLock rw = new ReentrantReadWriteLock();
-    private ReentrantReadWriteLock.ReadLock r = rw.readLock();
-    private ReentrantReadWriteLock.WriteLock w = rw.writeLock();
 
     public Object read() {
+
         log.debug("获取读锁...");
         r.lock();
         try {
@@ -41,6 +46,7 @@ class DataContainer {
     }
 
     public void write() {
+
         log.debug("获取写锁...");
         w.lock();
         try {
@@ -51,4 +57,5 @@ class DataContainer {
             w.unlock();
         }
     }
+
 }

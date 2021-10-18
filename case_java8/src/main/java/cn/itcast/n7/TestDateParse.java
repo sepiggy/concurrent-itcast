@@ -8,11 +8,14 @@ import java.time.format.DateTimeFormatter;
 
 @Slf4j(topic = "c.TestDateParse")
 public class TestDateParse {
+
     public static void main(String[] args) {
+
         test3();
     }
 
     private static void test1() {
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
@@ -26,6 +29,7 @@ public class TestDateParse {
     }
 
     private static void test2() {
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
@@ -41,6 +45,7 @@ public class TestDateParse {
     }
 
     private static void test3() {
+
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
@@ -49,4 +54,5 @@ public class TestDateParse {
             }).start();
         }
     }
+
 }

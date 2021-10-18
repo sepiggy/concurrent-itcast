@@ -1,13 +1,11 @@
 package cn.itcast.n4.reentrant;
 
-import lombok.extern.slf4j.Slf4j;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class TestFair {
+
     public static void main(String[] args) throws InterruptedException {
+
         ReentrantLock lock = new ReentrantLock(false);
 
         lock.lock();
@@ -36,4 +34,5 @@ public class TestFair {
         }
         lock.unlock();
     }
+
 }

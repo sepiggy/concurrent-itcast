@@ -11,7 +11,9 @@ import static cn.itcast.pattern.Downloader.download;
 
 @Slf4j(topic = "c.TestGuardedObjectV3")
 public class TestGuardedObjectV3 {
+
     public static void main(String[] args) {
+
         for (int i = 0; i < 3; i++) {
             GuardedObjectV3 v3 = Fetures.createFeture();
 
@@ -32,9 +34,11 @@ public class TestGuardedObjectV3 {
 
         }
     }
+
 }
 
 class Fetures {
+
     private static final ConcurrentHashMap<Integer, GuardedObjectV3> FETURES = new ConcurrentHashMap<>();
     private static final AtomicInteger ID_GENERATOR = new AtomicInteger();
 
@@ -54,28 +58,30 @@ class Fetures {
             v3.complete(response);
         }
     }
-}
 
+}
 
 /**
  * 添加多任务处理
  */
 class GuardedObjectV3 {
 
-    private int id;
-    private Object response;
+    private final int id;
     private final Object lock = new Object();
-
+    private Object response;
 
     public GuardedObjectV3(int id) {
+
         this.id = id;
     }
 
     public int getId() {
+
         return id;
     }
 
     public Object get() {
+
         synchronized (lock) {
             while (response == null) {
                 try {
@@ -89,9 +95,11 @@ class GuardedObjectV3 {
     }
 
     public void complete(Object response) {
+
         synchronized (lock) {
             this.response = response;
             lock.notifyAll();
         }
     }
+
 }

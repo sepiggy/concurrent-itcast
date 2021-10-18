@@ -7,14 +7,19 @@ public class Test1 {
 
     public static void test2() {
 
-        Thread t = new Thread(()->{ log.debug("running"); }, "t2");
+        Thread t = new Thread(() -> {
+            log.debug("running");
+        }, "t2");
 
         t.start();
     }
+
     public static void test1() {
-        Thread t = new Thread(){
+
+        Thread t = new Thread() {
             @Override
             public void run() {
+
                 log.debug("running");
             }
         };
@@ -22,4 +27,5 @@ public class Test1 {
         t.start();
 
     }
+
 }

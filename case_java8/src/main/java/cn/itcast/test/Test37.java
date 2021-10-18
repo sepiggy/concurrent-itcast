@@ -9,7 +9,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j(topic = "c.Test37")
 public class Test37 {
+
     public static void main(String[] args) throws ParseException, InterruptedException {
+
         Date a = getDate("1999-10-1");
         AtomicReference<Date> ref = new AtomicReference<>(a);
 
@@ -21,7 +23,7 @@ public class Test37 {
             log.debug("change A->B {}", ref.compareAndSet(a, b));
             a.setMonth(0);
             log.debug("change B->A {}", ref.compareAndSet(b, a));
-        },"t1").start();
+        }, "t1").start();
 
         // 1s 后
         Thread.sleep(1000);
@@ -32,6 +34,7 @@ public class Test37 {
     }
 
     private static Date getDate(String date) {
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             return sdf.parse(date);
@@ -39,4 +42,5 @@ public class Test37 {
             return null;
         }
     }
+
 }

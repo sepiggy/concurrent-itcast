@@ -3,14 +3,16 @@ package cn.itcast.n8;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-import java.util.concurrent.*;
-
-import static cn.itcast.n2.util.Sleeper.sleep;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 @Slf4j(topic = "c.TestShutDown")
 public class TestShutDown {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
+
         ExecutorService pool = Executors.newFixedThreadPool(2);
 
         Future<Integer> result1 = pool.submit(() -> {
@@ -38,6 +40,7 @@ public class TestShutDown {
 //        pool.shutdown();
 //        pool.awaitTermination(3, TimeUnit.SECONDS);
         List<Runnable> runnables = pool.shutdownNow();
-        log.debug("other.... {}" , runnables);
+        log.debug("other.... {}", runnables);
     }
+
 }

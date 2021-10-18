@@ -8,6 +8,7 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestSemaphore")
 public class TestSemaphore {
+
     public static void main(String[] args) {
         // 1. 创建 semaphore 对象
         Semaphore semaphore = new Semaphore(3);
@@ -30,4 +31,5 @@ public class TestSemaphore {
             }).start();
         }
     }
+
 }

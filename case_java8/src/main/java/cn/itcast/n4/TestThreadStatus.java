@@ -3,10 +3,12 @@ package cn.itcast.n4;
 import java.util.concurrent.TimeUnit;
 
 public class TestThreadStatus {
+
     static final Object obj = new Object();
+
     public static void main(String[] args) throws InterruptedException {
 
-        new Thread(()->{
+        new Thread(() -> {
             synchronized (obj) {
                 try {
                     obj.wait();
@@ -19,7 +21,7 @@ public class TestThreadStatus {
 
         }).start();
 
-        new Thread(()->{
+        new Thread(() -> {
             synchronized (obj) {
                 try {
                     obj.wait();
@@ -39,4 +41,5 @@ public class TestThreadStatus {
         }
         System.out.println("notify end ..."); // 断点
     }
+
 }

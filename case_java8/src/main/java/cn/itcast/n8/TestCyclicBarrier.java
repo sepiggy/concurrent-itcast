@@ -10,8 +10,9 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 public class TestCyclicBarrier {
 
     public static void main(String[] args) {
+
         ExecutorService service = Executors.newFixedThreadPool(3);
-        CyclicBarrier barrier = new CyclicBarrier(2, ()-> {
+        CyclicBarrier barrier = new CyclicBarrier(2, () -> {
             log.debug("task1, task2 finish...");
         });
         for (int i = 0; i < 3; i++) { // task1  task2  task1
@@ -39,6 +40,7 @@ public class TestCyclicBarrier {
     }
 
     private static void test1() {
+
         ExecutorService service = Executors.newFixedThreadPool(5);
         for (int i = 0; i < 3; i++) {
             CountDownLatch latch = new CountDownLatch(2);
@@ -61,4 +63,5 @@ public class TestCyclicBarrier {
         }
         service.shutdown();
     }
+
 }

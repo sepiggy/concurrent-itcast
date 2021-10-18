@@ -8,11 +8,14 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestInterrupt")
 public class TestInterrupt {
+
     public static void main(String[] args) {
+
         test2();
     }
 
     private static void test2() {
+
         ReentrantLock lock = new ReentrantLock();
 
         Thread t1 = new Thread(() -> {
@@ -24,7 +27,6 @@ public class TestInterrupt {
                 lock.unlock();
             }
         }, "t1");
-
 
         lock.lock();
         log.debug("获得了锁");
@@ -41,6 +43,7 @@ public class TestInterrupt {
     }
 
     private static void test1() {
+
         ReentrantLock lock = new ReentrantLock();
 
         Thread t1 = new Thread(() -> {
@@ -59,7 +62,6 @@ public class TestInterrupt {
             }
         }, "t1");
 
-
         lock.lock();
         log.debug("获得了锁");
         t1.start();
@@ -71,4 +73,5 @@ public class TestInterrupt {
             lock.unlock();
         }
     }
+
 }

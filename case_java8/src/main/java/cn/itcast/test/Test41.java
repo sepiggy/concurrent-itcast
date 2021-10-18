@@ -8,13 +8,17 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class Test41 {
+
     public static void main(String[] args) {
+
         for (int i = 0; i < 5; i++) {
             demo(
                     () -> new AtomicLong(0),
                     (adder) -> adder.getAndIncrement()
             );
         }
+
+        System.out.println("------------------------------");
 
         for (int i = 0; i < 5; i++) {
             demo(
@@ -29,6 +33,7 @@ public class Test41 {
     (参数) ->     执行累加操作
      */
     private static <T> void demo(Supplier<T> adderSupplier, Consumer<T> action) {
+
         T adder = adderSupplier.get();
         List<Thread> ts = new ArrayList<>();
         // 4 个线程，每人累加 50 万
@@ -52,4 +57,5 @@ public class Test41 {
         long end = System.nanoTime();
         System.out.println(adder + " cost:" + (end - start) / 1000_000);
     }
+
 }

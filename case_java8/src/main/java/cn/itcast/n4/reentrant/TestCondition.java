@@ -9,6 +9,7 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestCondition")
 public class TestCondition {
+
     static ReentrantLock lock = new ReentrantLock();
     static Condition waitCigaretteQueue = lock.newCondition();
     static Condition waitbreakfastQueue = lock.newCondition();
@@ -16,6 +17,7 @@ public class TestCondition {
     static volatile boolean hasBreakfast = false;
 
     public static void main(String[] args) {
+
         new Thread(() -> {
             try {
                 lock.lock();
@@ -55,6 +57,7 @@ public class TestCondition {
     }
 
     private static void sendCigarette() {
+
         lock.lock();
         try {
             log.debug("送烟来了");
@@ -66,6 +69,7 @@ public class TestCondition {
     }
 
     private static void sendBreakfast() {
+
         lock.lock();
         try {
             log.debug("送早餐来了");
@@ -75,4 +79,5 @@ public class TestCondition {
             lock.unlock();
         }
     }
+
 }

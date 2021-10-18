@@ -6,12 +6,14 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestCorrectPosture")
 public class TestCorrectPostureStep3 {
+
     static final Object room = new Object();
     static boolean hasCigarette = false;
     static boolean hasTakeout = false;
 
     // 虚假唤醒
     public static void main(String[] args) {
+
         new Thread(() -> {
             synchronized (room) {
                 log.debug("有烟没？[{}]", hasCigarette);
@@ -61,7 +63,6 @@ public class TestCorrectPostureStep3 {
                 room.notifyAll();
             }
         }, "送外卖的").start();
-
 
     }
 

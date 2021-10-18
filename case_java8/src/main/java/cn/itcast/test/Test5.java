@@ -6,9 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 public class Test5 {
 
     public static void main(String[] args) {
+
         Thread t1 = new Thread("t1") {
             @Override
             public void run() {
+
                 log.debug("running...");
             }
         };
@@ -17,4 +19,5 @@ public class Test5 {
         t1.start();
         System.out.println(t1.getState());
     }
+
 }

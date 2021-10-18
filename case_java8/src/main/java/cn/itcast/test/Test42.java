@@ -6,15 +6,19 @@ import sun.misc.Unsafe;
 
 @Slf4j(topic = "c.Test42")
 public class Test42 {
+
     public static void main(String[] args) {
+
         Account.demo(new MyAtomicInteger(10000));
     }
+
 }
 
 class MyAtomicInteger implements Account {
-    private volatile int value;
+
     private static final long valueOffset;
     private static final Unsafe UNSAFE;
+
     static {
         UNSAFE = UnsafeAccessor.getUnsafe();
         try {
@@ -25,12 +29,21 @@ class MyAtomicInteger implements Account {
         }
     }
 
+    private final int value;
+
+    public MyAtomicInteger(int value) {
+
+        this.value = value;
+    }
+
     public int getValue() {
+
         return value;
     }
 
     public void decrement(int amount) {
-        while(true) {
+
+        while (true) {
             int prev = this.value;
             int next = prev - amount;
             if (UNSAFE.compareAndSwapInt(this, valueOffset, prev, next)) {
@@ -39,17 +52,16 @@ class MyAtomicInteger implements Account {
         }
     }
 
-    public MyAtomicInteger(int value) {
-        this.value = value;
-    }
-
     @Override
     public Integer getBalance() {
+
         return getValue();
     }
 
     @Override
     public void withdraw(Integer amount) {
+
         decrement(amount);
     }
+
 }

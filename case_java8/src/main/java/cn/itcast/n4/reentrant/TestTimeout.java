@@ -9,11 +9,14 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestTimeout")
 public class TestTimeout {
+
     public static void main(String[] args) {
+
         test1();
     }
 
     private static void test1() {
+
         ReentrantLock lock = new ReentrantLock();
         Thread t1 = new Thread(() -> {
             log.debug("启动...");
@@ -41,7 +44,9 @@ public class TestTimeout {
             lock.unlock();
         }
     }
+
     private static void test2() {
+
         ReentrantLock lock = new ReentrantLock();
         Thread t1 = new Thread(() -> {
             log.debug("启动...");
@@ -65,4 +70,5 @@ public class TestTimeout {
             lock.unlock();
         }
     }
+
 }

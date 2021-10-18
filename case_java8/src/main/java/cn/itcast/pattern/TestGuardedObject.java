@@ -5,11 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.util.List;
 
-import static cn.itcast.pattern.Downloader.*;
+import static cn.itcast.pattern.Downloader.download;
 
 @Slf4j(topic = "c.TestGuardedObject")
 public class TestGuardedObject {
+
     public static void main(String[] args) {
+
         GuardedObject guardedObject = new GuardedObject();
         new Thread(() -> {
             try {
@@ -27,15 +29,15 @@ public class TestGuardedObject {
 
     }
 
-
 }
 
 class GuardedObject {
 
-    private Object response;
     private final Object lock = new Object();
+    private Object response;
 
     public Object get() {
+
         synchronized (lock) {
             // 条件不满足则等待
             while (response == null) {
@@ -50,10 +52,12 @@ class GuardedObject {
     }
 
     public void complete(Object response) {
+
         synchronized (lock) {
             // 条件满足，通知等待线程
             this.response = response;
             lock.notifyAll();
         }
     }
+
 }

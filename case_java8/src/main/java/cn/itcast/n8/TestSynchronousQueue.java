@@ -8,7 +8,9 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestSynchronousQueue")
 public class TestSynchronousQueue {
+
     public static void main(String[] args) {
+
         SynchronousQueue<Integer> integers = new SynchronousQueue<>();
         new Thread(() -> {
             try {
@@ -22,7 +24,7 @@ public class TestSynchronousQueue {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        },"t1").start();
+        }, "t1").start();
 
         sleep(1);
 
@@ -33,7 +35,7 @@ public class TestSynchronousQueue {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        },"t2").start();
+        }, "t2").start();
 
         sleep(1);
 
@@ -44,6 +46,7 @@ public class TestSynchronousQueue {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        },"t3").start();
+        }, "t3").start();
     }
+
 }

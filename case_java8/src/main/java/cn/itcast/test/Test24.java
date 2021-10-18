@@ -9,10 +9,12 @@ import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.Test24")
 public class Test24 {
-    static final Object room = new Object();
+
     static boolean hasCigarette = false;
     static boolean hasTakeout = false;
+
     static ReentrantLock ROOM = new ReentrantLock();
+
     // 等待烟的休息室
     static Condition waitCigaretteSet = ROOM.newCondition();
     // 等外卖的休息室
@@ -20,12 +22,11 @@ public class Test24 {
 
     public static void main(String[] args) {
 
-
         new Thread(() -> {
             ROOM.lock();
             try {
                 log.debug("有烟没？[{}]", hasCigarette);
-                while (!hasCigarette) {
+                while (!hasCigarette) { // 使用while循环避免虚假唤醒
                     log.debug("没烟，先歇会！");
                     try {
                         waitCigaretteSet.await();
@@ -67,7 +68,6 @@ public class Test24 {
                 ROOM.unlock();
             }
         }, "送外卖的").start();
-
         sleep(1);
 
         new Thread(() -> {

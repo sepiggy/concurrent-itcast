@@ -6,9 +6,14 @@ import java.util.concurrent.atomic.AtomicStampedReference;
 
 import static cn.itcast.n2.util.Sleeper.sleep;
 
+/**
+ * 演示 "ABA" 问题
+ * 使用 AtomicStampedReference 代替 AtmoicReference 可以解决 ABA 问题
+ */
 @Slf4j(topic = "c.Test36")
 public class Test36 {
 
+    //    static AtomicReference<String> ref = new AtomicReference<>("A");
     static AtomicStampedReference<String> ref = new AtomicStampedReference<>("A", 0);
 
     public static void main(String[] args) throws InterruptedException {
@@ -36,4 +41,5 @@ public class Test36 {
             log.debug("更新版本为 {}", ref.getStamp());
         }, "t2").start();
     }
+
 }

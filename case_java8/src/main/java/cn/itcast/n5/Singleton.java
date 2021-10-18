@@ -1,10 +1,12 @@
 package cn.itcast.n5;
 
 public final class Singleton {
-    private Singleton() {
-    }
 
     private static volatile Singleton INSTANCE = null;
+
+    private Singleton() {
+
+    }
 
     public static Singleton getInstance() {
         // 实例没创建，才会进入内部的 synchronized代码块
@@ -18,7 +20,6 @@ public final class Singleton {
         }
         return INSTANCE;*/
 
-
         if (INSTANCE != null) {
             return INSTANCE;
         }
@@ -30,4 +31,5 @@ public final class Singleton {
             return INSTANCE;
         }
     }
+
 }

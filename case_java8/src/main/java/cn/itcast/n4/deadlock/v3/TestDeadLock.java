@@ -9,9 +9,11 @@ import static cn.itcast.n4.deadlock.v3.TestDeadLock.STATE;
 
 @Slf4j(topic = "c.TestDeadLock")
 public class TestDeadLock {
+
     public static AtomicInteger STATE = new AtomicInteger(0b00000);
 
     public static void main(String[] args) {
+
         Chopstick c1 = new Chopstick("1");
         Chopstick c2 = new Chopstick("2");
         Chopstick c3 = new Chopstick("3");
@@ -23,14 +25,17 @@ public class TestDeadLock {
         new Philosopher("赫拉克利特", c4, c5).start();
         new Philosopher("阿基米德", c5, c1).start();
     }
+
 }
 
 @Slf4j(topic = "c.Philosopher")
 class Philosopher extends Thread {
+
     Chopstick left;
     Chopstick right;
 
     public Philosopher(String name, Chopstick left, Chopstick right) {
+
         super(name);
         this.left = left;
         this.right = right;
@@ -38,6 +43,7 @@ class Philosopher extends Thread {
 
     @Override
     public void run() {
+
         while (true) {
             do {
 
@@ -53,20 +59,26 @@ class Philosopher extends Thread {
     }
 
     private void eat() {
+
         log.debug("eating...{}+{}", left, right);
         Sleeper.sleep(1);
     }
+
 }
 
 class Chopstick {
+
     String name;
 
     public Chopstick(String name) {
+
         this.name = name;
     }
 
     @Override
     public String toString() {
+
         return "筷子{" + name + '}';
     }
+
 }

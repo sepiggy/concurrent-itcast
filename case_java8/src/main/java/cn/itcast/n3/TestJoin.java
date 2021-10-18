@@ -2,21 +2,22 @@ package cn.itcast.n3;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.TimeUnit;
-
 import static cn.itcast.n2.util.Sleeper.sleep;
 
 @Slf4j(topic = "c.TestJoin")
 public class TestJoin {
+
     static int r = 0;
     static int r1 = 0;
     static int r2 = 0;
 
     public static void main(String[] args) throws InterruptedException {
+
         test3();
     }
 
     public static void test3() throws InterruptedException {
+
         Thread t1 = new Thread(() -> {
             sleep(2);
             r1 = 10;
@@ -33,6 +34,7 @@ public class TestJoin {
     }
 
     private static void test2() throws InterruptedException {
+
         Thread t1 = new Thread(() -> {
             sleep(1);
             r1 = 10;
@@ -54,6 +56,7 @@ public class TestJoin {
     }
 
     private static void test1() throws InterruptedException {
+
         log.debug("开始");
         Thread t1 = new Thread(() -> {
             log.debug("开始");
@@ -66,4 +69,5 @@ public class TestJoin {
         log.debug("结果为:{}", r);
         log.debug("结束");
     }
+
 }

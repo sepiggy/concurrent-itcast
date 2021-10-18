@@ -6,13 +6,16 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j(topic = "c.TestReentrant")
 public class TestReentrant {
+
     static ReentrantLock lock = new ReentrantLock();
 
     public static void main(String[] args) {
+
         method1();
     }
 
     public static void method1() {
+
         lock.lock();
         try {
             log.debug("execute method1");
@@ -23,6 +26,7 @@ public class TestReentrant {
     }
 
     public static void method2() {
+
         lock.lock();
         try {
             log.debug("execute method2");
@@ -33,6 +37,7 @@ public class TestReentrant {
     }
 
     public static void method3() {
+
         lock.lock();
         try {
             log.debug("execute method3");
@@ -40,4 +45,5 @@ public class TestReentrant {
             lock.unlock();
         }
     }
+
 }

@@ -13,11 +13,13 @@ import java.util.concurrent.Future;
 public class TestSubmit {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
+
         ExecutorService pool = Executors.newFixedThreadPool(1);
 
     }
 
     private static void method3(ExecutorService pool) throws InterruptedException, ExecutionException {
+
         String result = pool.invokeAny(Arrays.asList(
                 () -> {
                     log.debug("begin 1");
@@ -42,6 +44,7 @@ public class TestSubmit {
     }
 
     private static void method2(ExecutorService pool) throws InterruptedException {
+
         List<Future<String>> futures = pool.invokeAll(Arrays.asList(
                 () -> {
                     log.debug("begin");
@@ -60,7 +63,7 @@ public class TestSubmit {
                 }
         ));
 
-        futures.forEach( f ->  {
+        futures.forEach(f -> {
             try {
                 log.debug("{}", f.get());
             } catch (InterruptedException | ExecutionException e) {
@@ -70,6 +73,7 @@ public class TestSubmit {
     }
 
     private static void method1(ExecutorService pool) throws InterruptedException, ExecutionException {
+
         Future<String> future = pool.submit(() -> {
             log.debug("running");
             Thread.sleep(1000);
@@ -78,4 +82,5 @@ public class TestSubmit {
 
         log.debug("{}", future.get());
     }
+
 }
