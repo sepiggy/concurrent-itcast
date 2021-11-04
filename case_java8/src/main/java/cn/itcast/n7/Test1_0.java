@@ -14,11 +14,13 @@ public class Test1_0 {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             new Thread(() -> {
                 try {
                     log.debug("{}", sdf.parse("1951-04-21"));
                 } catch (Exception e) {
+                    // 多线程情况下会抛出异常
+                    // java.lang.NumberFormatException: For input string: ""
                     log.error("{}", e);
                 }
             }).start();
